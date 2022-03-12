@@ -1,17 +1,99 @@
-import { FC } from "react";
-import { Table, Space, Row, Col } from "antd";
+import { FC, useState, useEffect } from "react";
+import { Table, Row, Col, Button, Input, Space } from "antd";
 import { Filter } from "../../components/filter/Filter.tsx";
 import styles from "./Heros.module.scss";
 import { HerosFilterFields } from "./HerosFilterFields.tsx";
+import { SearchOutlined } from "@ant-design/icons";
+import Highlighter from "react-highlight-words";
 
 export const Heros: FC = () => {
   const { filterFields } = HerosFilterFields();
+  const [searchInfo, setSearchInfo] = useState({
+    searchText: "",
+    searchedColumn: ""
+  });
+  //state to save heros data
+  // const [herosData, setHerosData] = useState();
+
+  //get all heros data
+  useEffect(() => {
+    //get heros data endpoint
+    //  getAllHeros().then((data) => {
+    //    setHerosData(data);
+    //  })
+  }, []);
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchInfo({
+      searchText: selectedKeys[0],
+      searchedColumn: dataIndex
+    });
+  };
+
+  const handleReset = clearFilters => {
+    clearFilters();
+    setSearchInfo({ searchText: "", searchedColumn: "" });
+  };
+
+  const getColumnSearchProps = (dataIndex: string) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters
+    }) => (
+      <div className={styles["search-input"]}>
+        <Input
+          placeholder={`Search by ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+          >
+            Search
+          </Button>
+          <Button onClick={() => handleReset(clearFilters)} size="small">
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: () => <SearchOutlined />,
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : "",
+    render: text =>
+      searchInfo.searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchInfo.searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      )
+  });
 
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      ...getColumnSearchProps("name"),
       sorter: (a, b) => a.name.localeCompare(b.name)
     },
     {
@@ -23,7 +105,11 @@ export const Heros: FC = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: text => <a>{text}</a>
+      render: text => (
+        <Button type="link" className={styles.btn}>
+          {text}
+        </Button>
+      )
     },
     {
       title: "Date",

@@ -6,3 +6,24 @@
 .table {
   box-shadow: 0 1px 12px 0px rgba(0, 0, 0, 0.1);
 }
+
+.btn {
+  padding: 0;
+}
+
+.search-input {
+  margin-bottom: 8;
+  display: "block";
+}
+
+.search-input {
+  :global {
+    .ant-input {
+      display: block;
+      margin-bottom: 8px;
+    }
+    .ant-btn {
+      width: 90px;
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { IFilterFields } from "../../interfaces/IEntity";
 import { HerosApis } from "../../services/heros.tsx";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { Store } from "antd/lib/form/interface";
 
 interface IProps {
   filterFields: IFilterFields[];
@@ -17,18 +18,22 @@ export const Filter: FC<IProps> = ({ filterFields }) => {
   const [form] = Form.useForm();
   const navigateTo = useNavigate();
   const params = new URLSearchParams(window.location.search);
-
   const fields = {
     DATE: "date"
   };
+  let OptionsApi;
+
   const getOptions = (api: string) => {
-    getOptionsList(api).then(data => {
-      setOptions(data);
-    });
-    return <></>;
+    OptionsApi = api;
   };
 
-  const applyFilter = (values: any) => {
+  useEffect(() => {
+    getOptionsList(OptionsApi).then(data => {
+      setOptions(data);
+    });
+  }, []);
+
+  const applyFilter = (values: Store) => {
     Object.entries(values).forEach(([key, value]) => {
       if (value) {
         if (key === fields.DATE) {
@@ -36,6 +41,8 @@ export const Filter: FC<IProps> = ({ filterFields }) => {
         } else {
           params.set(key, value);
         }
+      } else {
+        params.delete(key);
       }
     });
     navigateTo({ search: params.toString() });
