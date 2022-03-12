@@ -78,7 +78,7 @@ export const Heros: FC = () => {
     render: text =>
       searchInfo.searchedColumn === dataIndex ? (
         <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          highlightClassName={styles.highlight}
           searchWords={[searchInfo.searchText]}
           autoEscape
           textToHighlight={text ? text.toString() : ""}
