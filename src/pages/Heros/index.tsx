@@ -134,17 +134,17 @@ export const Heros: FC = () => {
       name: "John Brown",
       phone: "0564738945",
       email: "a@mail.com",
-      date: "909",
-      country: "Saudi Arabia",
-      company: "LV"
+      date: "2022-01-04",
+      country: "Sweden",
+      company: "eBay"
     },
     {
       key: "2",
       name: "Jim Green",
       phone: "0547583749",
       email: "b@mail.com",
-      date: "909",
-      country: "Saudi Arabia",
+      date: "2022-02-05",
+      country: "Austria",
       company: "LV"
     },
     {
@@ -152,9 +152,9 @@ export const Heros: FC = () => {
       name: "Joe Black",
       phone: "0574893745",
       email: "c@mail.com",
-      date: "909",
-      country: "Saudi Arabia",
-      company: "LV"
+      date: "2022-03-05",
+      country: "Germany",
+      company: "Facebook"
     }
   ];
 
