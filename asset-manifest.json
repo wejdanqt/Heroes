@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Heroes/static/css/main.74a60e6c.css",
+    "main.js": "/Heroes/static/js/main.b7fa003b.js",
+    "index.html": "/Heroes/index.html",
+    "main.74a60e6c.css.map": "/Heroes/static/css/main.74a60e6c.css.map",
+    "main.b7fa003b.js.map": "/Heroes/static/js/main.b7fa003b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.74a60e6c.css",
+    "static/js/main.b7fa003b.js"
+  ]
+}
